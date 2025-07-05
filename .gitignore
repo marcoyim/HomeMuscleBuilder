@@ -1,0 +1,42 @@
+# Ignore file containing local development secrets
+local.settings.json
+
+# Ignore Node.js dependencies
+node_modules/
+
+# IDE files
+.vscode/settings.json
+.vscode/launch.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Azure Functions artifacts
+bin
+obj
+appsettings.json
+
+# Azure Static Web Apps CLI
+.azure/
+swa-cli.config.json
+
+# Planning documents (keep for development)
+.planning/
