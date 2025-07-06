@@ -1,0 +1,27 @@
+<!-- Simple SVG icon that can be used as a base for generating different sized PNGs -->
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="#1a73e8" stroke="#ffffff" stroke-width="8"/>
+  
+  <!-- Muscle/arm icon -->
+  <g fill="#ffffff">
+    <!-- Bicep -->
+    <ellipse cx="200" cy="200" rx="40" ry="60" transform="rotate(-30 200 200)"/>
+    <!-- Forearm -->
+    <ellipse cx="280" cy="280" rx="30" ry="50" transform="rotate(-30 280 280)"/>
+    <!-- Dumbbell -->
+    <rect x="320" y="320" width="80" height="12" rx="6" transform="rotate(45 360 326)"/>
+    <circle cx="340" cy="340" r="8"/>
+    <circle cx="380" cy="300" r="8"/>
+  </g>
+  
+  <!-- Plus sign for "builder" concept -->
+  <g fill="#ffffff" opacity="0.8">
+    <rect x="140" y="140" width="40" height="8" rx="4"/>
+    <rect x="144" y="120" width="8" height="40" rx="4"/>
+  </g>
+  
+  <!-- Text "HMB" -->
+  <text x="256" y="180" font-family="Arial, sans-serif" font-size="48" font-weight="bold" 
+        text-anchor="middle" fill="#ffffff">HMB</text>
+</svg>

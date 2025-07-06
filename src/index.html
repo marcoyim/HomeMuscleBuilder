@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Home Muscle Builder - Personalized home workouts for muscle building">
+    <meta name="theme-color" content="#1a73e8">
+    
+    <title>Home Muscle Builder</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- iOS PWA meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Home Muscle Builder">
+</head>
+<body>
+    <!-- App Shell -->
+    <div id="app">
+        <!-- Onboarding Screen -->
+        <div id="onboarding-screen" class="onboarding-screen" style="display: none;">
+            <div class="onboarding-content">
+                <!-- Welcome Step -->
+                <div id="onboarding-welcome" class="onboarding-step active">
+                    <div class="welcome-hero">
+                        <div class="hero-icon">💪</div>
+                        <h1>Welcome to Home Muscle Builder</h1>
+                        <p>Your personalized fitness journey starts here. Let's create a workout plan that's perfect for you.</p>
+                        <button class="btn btn-primary btn-large" onclick="app.nextOnboardingStep()">Get Started</button>
+                    </div>
+                </div>
+
+                <!-- Personal Info Step -->
+                <div id="onboarding-personal" class="onboarding-step">
+                    <div class="step-header">
+                        <h2>Tell us about yourself</h2>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <form id="onboarding-personal-form" class="onboarding-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="onboard-name">What should we call you? *</label>
+                                <input type="text" id="onboard-name" name="name" placeholder="Enter your name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="onboard-age">How old are you? *</label>
+                                <input type="number" id="onboard-age" name="age" min="15" max="80" placeholder="e.g., 25" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-gender">Gender *</label>
+                                <select id="onboard-gender" name="gender" required>
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="app.previousOnboardingStep()">Back</button>
+                            <button type="submit" class="btn btn-primary">Continue</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Body Info Step -->
+                <div id="onboarding-body" class="onboarding-step">
+                    <div class="step-header">
+                        <h2>Your body information</h2>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    <form id="onboarding-body-form" class="onboarding-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="onboard-height">Height (cm) *</label>
+                                <input type="number" id="onboard-height" name="height" min="140" max="220" placeholder="e.g., 175" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-weight">Weight (kg) *</label>
+                                <input type="number" id="onboard-weight" name="weight" min="40" max="200" placeholder="e.g., 70" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="onboard-fitness-level">Current fitness level *</label>
+                            <select id="onboard-fitness-level" name="fitnessLevel" required>
+                                <option value="">Select your level</option>
+                                <option value="beginner">Beginner - Just starting out</option>
+                                <option value="intermediate">Intermediate - Regular exercise</option>
+                                <option value="advanced">Advanced - Very experienced</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="app.previousOnboardingStep()">Back</button>
+                            <button type="submit" class="btn btn-primary">Continue</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Goals Step -->
+                <div id="onboarding-goals" class="onboarding-step">
+                    <div class="step-header">
+                        <h2>What are your goals?</h2>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <form id="onboarding-goals-form" class="onboarding-form">
+                        <div class="goal-options">
+                            <div class="goal-card" data-goal="muscle-gain">
+                                <div class="goal-icon">🏗️</div>
+                                <h3>Build Muscle</h3>
+                                <p>Increase muscle mass and strength</p>
+                            </div>
+                            <div class="goal-card" data-goal="fat-loss">
+                                <div class="goal-icon">🔥</div>
+                                <h3>Lose Fat</h3>
+                                <p>Burn fat while maintaining muscle</p>
+                            </div>
+                            <div class="goal-card" data-goal="general-fitness">
+                                <div class="goal-icon">⚡</div>
+                                <h3>General Fitness</h3>
+                                <p>Improve overall health and fitness</p>
+                            </div>
+                            <div class="goal-card" data-goal="strength">
+                                <div class="goal-icon">💪</div>
+                                <h3>Get Stronger</h3>
+                                <p>Focus on increasing strength</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selected-goal" name="primaryGoal" required>
+                        <div class="form-group">
+                            <label for="onboard-availability">How many days per week can you workout?</label>
+                            <select id="onboard-availability" name="weeklyAvailability" required>
+                                <option value="">Select days per week</option>
+                                <option value="2">2 days per week</option>
+                                <option value="3">3 days per week</option>
+                                <option value="4">4 days per week</option>
+                                <option value="5">5 days per week</option>
+                                <option value="6">6 days per week</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="app.previousOnboardingStep()">Back</button>
+                            <button type="submit" class="btn btn-primary">Continue</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Plan Recommendation Step -->
+                <div id="onboarding-plan" class="onboarding-step">
+                    <div class="step-header">
+                        <h2>Your Personalized Plan</h2>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div id="recommended-plan-content" class="plan-recommendation">
+                        <!-- Plan will be populated by JavaScript -->
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="app.previousOnboardingStep()">Back</button>
+                        <button type="button" class="btn btn-primary btn-large" onclick="app.completeOnboarding()">Start My Journey!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">💪 Home Muscle Builder</h1>
+                <nav class="main-nav">
+                    <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+                    <button class="nav-btn" data-view="profile">Profile</button>
+                    <button class="nav-btn" data-view="exercises">Exercises</button>
+                    <button class="nav-btn" data-view="workouts">Workouts</button>
+                    <button class="nav-btn" data-view="plan">My Plan</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view active">
+                <div class="view-content">
+                    <h2>Welcome to Your Fitness Journey</h2>
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <h3>Today's Workout</h3>
+                            <p id="today-workout">No workout planned</p>
+                            <button class="btn btn-primary" onclick="showView('workouts')">Plan Workout</button>
+                        </div>
+                        <div class="card">
+                            <h3>Streak</h3>
+                            <p id="workout-streak">0 days</p>
+                        </div>
+                        <div class="card">
+                            <h3>Total Workouts</h3>
+                            <p id="total-workouts">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile View -->
+            <section id="profile-view" class="view">
+                <div class="view-content">
+                    <h2>User Profile</h2>
+                    <form id="profile-form" class="profile-form">
+                        <div class="form-group">
+                            <label for="nickname">Nickname</label>
+                            <input type="text" id="nickname" name="nickname" placeholder="Enter your nickname">
+                        </div>
+                        <div class="form-group">
+                            <label for="birth-year">Year of Birth *</label>
+                            <input type="number" id="birth-year" name="birthYear" min="1950" max="2010" placeholder="e.g., 1990" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fitness-level">Fitness Level</label>
+                            <select id="fitness-level" name="fitnessLevel">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                    </form>
+                    
+                    <div id="profile-info" class="profile-info" style="display: none;">
+                        <h3>Profile Information</h3>
+                        <p><strong>Age Group:</strong> <span id="age-group"></span></p>
+                        <p><strong>Recommended Plan:</strong> <span id="recommended-plan"></span></p>
+                        <button class="btn btn-secondary" onclick="editProfile()">Edit Profile</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exercises View -->
+            <section id="exercises-view" class="view">
+                <div class="view-content">
+                    <h2>Exercise Library</h2>
+                    <div class="exercise-controls">
+                        <input type="text" id="exercise-search" placeholder="Search exercises...">
+                        <select id="muscle-filter">
+                            <option value="">All Muscle Groups</option>
+                            <option value="chest">Chest</option>
+                            <option value="back">Back</option>
+                            <option value="shoulders">Shoulders</option>
+                            <option value="arms">Arms</option>
+                            <option value="legs">Legs</option>
+                            <option value="core">Core</option>
+                        </select>
+                    </div>
+                    <div id="exercises-list" class="exercises-list">
+                        <!-- Exercises will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workouts View -->
+            <section id="workouts-view" class="view">
+                <div class="view-content">
+                    <h2>Workout Log</h2>
+                    <div class="workout-controls">
+                        <button class="btn btn-primary" onclick="startNewWorkout()">Start New Workout</button>
+                        <button class="btn btn-secondary" onclick="showWorkoutHistory()">View History</button>
+                    </div>
+                    
+                    <!-- New Workout Form -->
+                    <div id="new-workout" class="workout-form" style="display: none;">
+                        <h3>New Workout</h3>
+                        <form id="workout-form">
+                            <div class="form-group">
+                                <label for="workout-date">Date</label>
+                                <input type="date" id="workout-date" name="date" required>
+                            </div>
+                            <div id="exercise-entries">
+                                <!-- Exercise entries will be added dynamically -->
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addExerciseEntry()">Add Exercise</button>
+                            <button type="submit" class="btn btn-primary">Save Workout</button>
+                            <button type="button" class="btn btn-outline" onclick="cancelWorkout()">Cancel</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Workout History -->
+                    <div id="workout-history" class="workout-history">
+                        <div id="workout-calendar" class="calendar-view">
+                            <!-- Calendar will be populated by JavaScript -->
+                        </div>
+                        <div id="workout-details" class="workout-details">
+                            <!-- Selected workout details will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Plan View -->
+            <section id="plan-view" class="view">
+                <div class="view-content">
+                    <div id="user-plan-content">
+                        <!-- Plan content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="install-prompt" id="install-prompt" style="display: none;">
+                    <span>Install this app for the best experience!</span>
+                    <button class="btn btn-small" onclick="installApp()">Install</button>
+                    <button class="btn btn-outline btn-small" onclick="dismissInstallPrompt()">Not now</button>
+                </div>
+                <div class="notification-prompt" id="notification-prompt" style="display: none;">
+                    <span>Enable workout reminders to stay consistent!</span>
+                    <button class="btn btn-small" onclick="enableNotifications()">Enable</button>
+                    <button class="btn btn-outline btn-small" onclick="dismissNotificationPrompt()">Maybe later</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Offline Indicator -->
+    <div id="offline-indicator" class="offline-indicator" style="display: none;">
+        <span>📴 You're offline</span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

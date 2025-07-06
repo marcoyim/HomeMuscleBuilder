@@ -4,6 +4,9 @@ local.settings.json
 # Ignore Node.js dependencies
 node_modules/
 
+# Environment variables
+.env
+
 # IDE files
 .vscode/settings.json
 .vscode/launch.json
