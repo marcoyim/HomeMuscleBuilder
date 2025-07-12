@@ -1,7 +1,6 @@
 // Home Muscle Builder - Main Application
 class HomeMuscleBuilderApp {
     constructor() {
-        this.currentView = 'dashboard';
         this.userProfile = null;
         this.userPlan = null;
         this.exercises = [];
@@ -9,6 +8,7 @@ class HomeMuscleBuilderApp {
         this.workoutStreak = 0;
         this.onboardingStep = 0;
         this.onboardingData = {};
+        this.deferredPrompt = null;
         
         this.init();
     }
