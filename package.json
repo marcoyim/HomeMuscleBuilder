@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "start": "serve -s dist -l ${PORT:-3000}"
   },
   "keywords": [
     "fitness",
@@ -24,5 +25,7 @@
     "vite": "^5.0.0",
     "vite-plugin-pwa": "^0.17.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "serve": "^14.0.0"
+  }
 }
