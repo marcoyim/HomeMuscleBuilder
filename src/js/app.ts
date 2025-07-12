@@ -1,19 +1,87 @@
 // Home Muscle Builder - Main Application
+
+// TypeScript interface definitions
+interface UserProfile {
+    name?: string;
+    nickname?: string;
+    age?: number;
+    birthYear?: number;
+    gender?: string;
+    height?: number;
+    weight?: number;
+    fitnessLevel?: string;
+    primaryGoal?: string;
+    weeklyAvailability?: number;
+    onboardingCompleted?: boolean;
+}
+
+interface Exercise {
+    id: string;
+    name: string;
+    description: string;
+    muscleGroups: string[];
+    difficulty: string;
+    equipment: string[];
+    instructions: string[];
+}
+
+interface WorkoutEntry {
+    exerciseId: string;
+    sets: number;
+    reps: number;
+    weight?: number;
+    duration?: number;
+    notes?: string;
+}
+
+interface Workout {
+    id: string;
+    date: string;
+    exercises: WorkoutEntry[];
+    duration?: number;
+    notes?: string;
+}
+
+interface UserPlan {
+    id: string;
+    name: string;
+    description: string;
+    ageGroup: string;
+    difficulty: string;
+    daysPerWeek: number;
+    workouts: any[];
+}
+
+// Extend Window interface for global functions
+declare global {
+    interface Window {
+        showView: (view: string) => void;
+        startNewWorkout: () => void;
+        addExerciseEntry: () => void;
+        cancelWorkout: () => void;
+        showWorkoutHistory: () => void;
+        editProfile: () => void;
+        installApp?: () => void;
+        dismissInstallPrompt?: () => void;
+        app: HomeMuscleBuilderApp | null;
+    }
+}
+
 class HomeMuscleBuilderApp {
+    private userProfile: UserProfile | null = null;
+    private userPlan: UserPlan | null = null;
+    private exercises: Exercise[] = [];
+    private workouts: Workout[] = [];
+    private workoutStreak: number = 0;
+    private onboardingStep: number = 0;
+    private onboardingData: Partial<UserProfile> = {};
+    private deferredPrompt: any = null;
+    
     constructor() {
-        this.userProfile = null;
-        this.userPlan = null;
-        this.exercises = [];
-        this.workouts = [];
-        this.workoutStreak = 0;
-        this.onboardingStep = 0;
-        this.onboardingData = {};
-        this.deferredPrompt = null;
-        
         this.init();
     }
 
-    async init() {
+    async init(): Promise<void> {
         console.log('Initializing Home Muscle Builder App...');
         
         // Load data from localStorage
@@ -72,14 +140,14 @@ class HomeMuscleBuilderApp {
         this.calculateWorkoutStreak();
     }
 
-    saveUserProfile(profileData) {
+    saveUserProfile(profileData: UserProfile): void {
         this.userProfile = profileData;
         localStorage.setItem('hmb-user-profile', JSON.stringify(profileData));
         this.showProfileInfo();
         this.updateDashboard();
     }
 
-    saveUserPlan(planData) {
+    saveUserPlan(planData: UserPlan): void {
         this.userPlan = planData;
         localStorage.setItem('hmb-user-plan', JSON.stringify(planData));
     }
@@ -459,7 +527,7 @@ class HomeMuscleBuilderApp {
     }
 
     // UI Management
-    showView(viewName) {
+    showView(viewName: string): void {
         // Hide all views
         document.querySelectorAll('.view').forEach(view => {
             view.classList.remove('active');
@@ -1071,7 +1139,7 @@ class HomeMuscleBuilderApp {
     }
 
     // Utility Methods
-    showMessage(message, type = 'info') {
+    showMessage(message: string, type: string = 'info'): void {
         // Create a simple toast notification
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
